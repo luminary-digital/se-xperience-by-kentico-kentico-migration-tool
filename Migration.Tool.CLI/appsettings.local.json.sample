@@ -14,7 +14,7 @@
         "Connections": [
           {
             "SourceInstanceUri": "https://localhost:5001/",
-            "Secret": "my_secret"
+            "Secret": "copper-snowless-flick"
           }
         ]
       }
