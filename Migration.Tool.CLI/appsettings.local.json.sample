@@ -1,0 +1,23 @@
+﻿{
+  "Settings": {
+    "KxConnectionString": "Data Source=BOB-PC;Initial Catalog=schneider-electric-k13-migration;Integrated Security=True;Persist Security Info=False;Connect Timeout=60;Encrypt=False;Current Language=English;",
+    "KxCmsDirPath": "C:\\Projects\\xbyk-playground\\KenticoCMS13\\CMS",
+    "XbyKDirPath": "C:\\Projects\\xbyk-playground\\xbyk\\src\\SE.WebApp",
+    "XbyKApiSettings": {
+      "ConnectionStrings": {
+        "CMSConnectionString": "Data Source=BOB-PC;Initial Catalog=xbyk-playground;Integrated Security=True;Persist Security Info=False;Connect Timeout=60;Encrypt=False;Current Language=English;"
+      }
+    },
+    "OptInFeatures": {
+      "QuerySourceInstanceApi": {
+        "Enabled": true,
+        "Connections": [
+          {
+            "SourceInstanceUri": "https://localhost:5001/",
+            "Secret": "my_secret"
+          }
+        ]
+      }
+    }
+  }
+}
