@@ -1,7 +1,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using Migration.Tool.Extensions.CommunityMigrations;
+using Migration.Tool.Extensions.ContentItemDirectors;
 using Migration.Tool.Extensions.DefaultMigrations;
 using Migration.Tool.KXP.Api.Services.CmsClass;
+using Migration.Tool.Source.Mappers.ContentItemMapperDirectives;
 
 namespace Migration.Tool.Extensions;
 
@@ -15,6 +17,9 @@ public static class ServiceCollectionExtensions
         services.AddTransient<IWidgetPropertyMigration, WidgetFileMigration>();
         services.AddTransient<IWidgetPropertyMigration, WidgetPathSelectorMigration>();
         services.AddTransient<IWidgetPropertyMigration, WidgetPageSelectorMigration>();
+        
+        services.AddTransient<ContentItemDirectorBase, FolderHierarchyContentItemDirector>();
+
 
 
         // services.AddClassMergeExample();
