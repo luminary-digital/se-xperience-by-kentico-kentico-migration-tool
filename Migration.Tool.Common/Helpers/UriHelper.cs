@@ -18,7 +18,17 @@ public static class UriHelper
             sb.Append(uri.AbsolutePath);
         }
 
-        return sb.ToString();
+        // Ensure the domain string doesn't end with a trailing slash
+        string result = sb.ToString().TrimEnd('/');
+        
+        // Validate: must contain at least one dot unless it's exactly "localhost"
+        if (result != "localhost" && !result.Contains('.'))
+        {
+            // If no dot found and not localhost, append .local to make it valid
+            result = result.Split(':')[0] + ".local" + (result.Contains(':') ? result.Substring(result.IndexOf(':')) : "");
+        }
+
+        return result;
     }
 
     public static UniqueDomainResult GetUniqueDomainCandidate(string input, ref int startPort, Func<string, bool> checkIsUnique, int maxAttempts = 100)
