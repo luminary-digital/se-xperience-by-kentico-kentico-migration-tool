@@ -17,8 +17,16 @@ public static class ServiceCollectionExtensions
         services.AddTransient<IWidgetPropertyMigration, WidgetFileMigration>();
         services.AddTransient<IWidgetPropertyMigration, WidgetPathSelectorMigration>();
         services.AddTransient<IWidgetPropertyMigration, WidgetPageSelectorMigration>();
+
+        #region Custom Migrations
+        // Widget property migrations
+        services.AddTransient<IWidgetPropertyMigration, WidgetPageSelectorToCombinedSelectorMigration>();
         
+        // Content item directors
         services.AddTransient<ContentItemDirectorBase, FolderHierarchyContentItemDirector>();
+        
+        #endregion
+        
 
 
 
