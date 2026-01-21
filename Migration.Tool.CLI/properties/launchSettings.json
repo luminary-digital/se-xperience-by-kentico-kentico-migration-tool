@@ -1,0 +1,8 @@
+﻿{
+  "profiles": {
+    "Migration.Tool.CLI": {
+      "commandName": "Project",
+      "commandLineArgs": "migrate --sites --users --page-types --custom-modules --pages --settings-keys"
+    }
+  }
+}
