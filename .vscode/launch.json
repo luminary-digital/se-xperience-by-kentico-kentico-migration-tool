@@ -1,0 +1,36 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch Migration.Tool.CLI",
+      "type": "coreclr",
+      "request": "launch",
+      "program": "${workspaceFolder}/Migration.Tool.CLI/bin/Debug/net8.0/Migration.Tool.CLI.dll",
+      "args": [
+        "migrate",
+        "--sites",
+        "--custom-modules",
+        "--users",
+        "--media-libraries",
+        "--page-types",
+        "--pages",
+        "--settings-keys"
+      ],
+      "cwd": "${workspaceFolder}/Migration.Tool.CLI",
+      "stopAtEntry": false,
+      "console": "integratedTerminal",
+      "preLaunchTask": "build-cli"
+    },
+    {
+      "name": "Launch Migration.Tool.CLI with args",
+      "type": "coreclr",
+      "request": "launch",
+      "program": "${workspaceFolder}/Migration.Tool.CLI/bin/Debug/net8.0/Migration.Tool.CLI.dll",
+      "args": ["--help"],
+      "cwd": "${workspaceFolder}/Migration.Tool.CLI",
+      "stopAtEntry": false,
+      "console": "integratedTerminal",
+      "preLaunchTask": "build-cli"
+    }
+  ]
+}
