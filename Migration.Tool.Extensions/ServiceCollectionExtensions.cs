@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Migration.Tool.Extensions.CommunityMigrations;
 using Migration.Tool.Extensions.ContentItemDirectors;
+using Migration.Tool.Extensions.CustomWidgetMigrations;
 using Migration.Tool.Extensions.DefaultMigrations;
 using Migration.Tool.KXP.Api.Services.CmsClass;
 using Migration.Tool.Source.Mappers.ContentItemMapperDirectives;
