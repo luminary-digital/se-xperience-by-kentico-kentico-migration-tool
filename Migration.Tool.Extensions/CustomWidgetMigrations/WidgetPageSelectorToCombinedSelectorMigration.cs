@@ -1,11 +1,12 @@
 ﻿using CMS.ContentEngine;
-using CMS.Core;
 using Microsoft.Extensions.Logging;
 using Migration.Tool.Common.Enumerations;
 using Migration.Tool.Common.Services;
 using Migration.Tool.KXP.Api.Services.CmsClass;
 using Migration.Tool.Source.Services.Model;
 using Newtonsoft.Json.Linq;
+
+namespace Migration.Tool.Extensions.CustomWidgetMigrations;
 
 /// <summary>
 /// Migrates widget properties from Kentico 13 Page Selector to Combined Selector format.
@@ -23,7 +24,13 @@ public class WidgetPageSelectorToCombinedSelectorMigration(
     /// </summary>
     private static readonly HashSet<string> MigratedProperties = new(StringComparer.InvariantCultureIgnoreCase)
     {
-        "datasource"
+        "datasource",
+        "iconTileContentCrossLinkDatasource",
+        "clubClipsalContentTilesDatasource",
+        "supportAdditionalInfo1",
+        "supportAdditionalInfo2",
+        "supportAdditionalInfo3",
+        "supportAdditionalInfo4"
     };
 
     // Set higher priority (lower number) than migrations you want to override
