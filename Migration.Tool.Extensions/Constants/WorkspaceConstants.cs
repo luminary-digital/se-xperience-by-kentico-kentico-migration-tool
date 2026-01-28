@@ -1,3 +1,5 @@
+namespace Migration.Tool.Extensions.Constants;
+
 public static class WorkspaceConstants
 {
     public const string ClipsalWorkspaceName = "clipsal_workspace";

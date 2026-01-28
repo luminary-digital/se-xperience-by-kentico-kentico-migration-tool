@@ -1,5 +1,6 @@
 using Migration.Tool.Common;
 using Migration.Tool.Common.Services;
+using Migration.Tool.Extensions.Constants;
 using Migration.Tool.Source.Mappers.ContentItemMapperDirectives;
 
 namespace Migration.Tool.Extensions.ContentItemDirectors;
@@ -13,6 +14,18 @@ namespace Migration.Tool.Extensions.ContentItemDirectors;
 /// <param name="toolConfiguration"></param>
 public class WorkspaceContentItemDirector(ContentFolderService contentFolderService, WorkspaceService workspaceService, ToolConfiguration toolConfiguration) : ContentItemDirectorBase
 {
+    public override void Direct(MediaContentItemSource source, IBaseContentItemActionProvider options)
+    {
+        if (source.SourceSite.SiteDisplayName == SiteConstants.ClipsalSiteDisplayName)
+        {
+            options.OverrideWorkspace(WorkspaceConstants.ClipsalWorkspaceName, WorkspaceConstants.ClipsalWorkspaceDisplayName);
+        } 
+        else
+        {
+            options.OverrideWorkspace(WorkspaceConstants.PdlWorkspaceName, WorkspaceConstants.PdlWorkspaceDisplayName);
+        }
+    }
+
     public override void Direct(ContentItemSource source, IContentItemActionProvider options)
     {
         // Handle only content to be converted to Content Hub items

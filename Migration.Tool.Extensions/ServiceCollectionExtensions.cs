@@ -1,8 +1,11 @@
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using Migration.Tool.Extensions.Behaviors;
 using Migration.Tool.Extensions.CommunityMigrations;
 using Migration.Tool.Extensions.ContentItemDirectors;
 using Migration.Tool.Extensions.CustomWidgetMigrations;
 using Migration.Tool.Extensions.DefaultMigrations;
+using Migration.Tool.Extensions.Initializers;
 using Migration.Tool.KXP.Api.Services.CmsClass;
 using Migration.Tool.Source.Mappers.ContentItemMapperDirectives;
 
@@ -26,6 +29,15 @@ public static class ServiceCollectionExtensions
         // Content item directors
         services.AddTransient<ContentItemDirectorBase, WorkspaceContentItemDirector>();
         
+        #endregion
+
+        #region Initializers
+        // Register content hub initializer as singleton to maintain state across pipeline invocations
+        services.AddSingleton<ContentHubInitializer>();
+        
+        // Register the MediatR behavior to run the initializer AFTER XbyK API is initialized
+        // Must be registered AFTER UseKsToolCore() so it runs after XbyKApiContextBehavior
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ContentHubInitializerBehavior<,>));
         #endregion
         
 

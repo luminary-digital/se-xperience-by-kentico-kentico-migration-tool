@@ -2,7 +2,7 @@
   "profiles": {
     "Migration.Tool.CLI": {
       "commandName": "Project",
-      "commandLineArgs": "migrate --sites --users --page-types --custom-modules --pages --settings-keys"
+      "commandLineArgs": "migrate --sites --users --page-types --custom-modules --pages --settings-keys --custom-tables --media-libraries"
     }
   }
 }
