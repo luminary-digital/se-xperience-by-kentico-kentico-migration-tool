@@ -6,7 +6,7 @@ using Migration.Tool.Source.Mappers.ContentItemMapperDirectives;
 namespace Migration.Tool.Extensions.ContentItemDirectors;
 
 /// <summary>
-/// Responsible for directing content items into a workspace (Clipsa and PDL specific workspaces)
+/// Responsible for directing content items into a workspace (Clipsal and PDL specific workspaces)
 /// and creating folder hierarchies for content hub items.
 /// </summary>
 /// <param name="contentFolderService"></param>
