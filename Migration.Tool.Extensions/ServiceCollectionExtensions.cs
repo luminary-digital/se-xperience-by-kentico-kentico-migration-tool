@@ -27,7 +27,8 @@ public static class ServiceCollectionExtensions
         services.AddTransient<IWidgetPropertyMigration, WidgetPageSelectorToCombinedSelectorMigration>();
         
         // Content item directors
-        services.AddTransient<ContentItemDirectorBase, WorkspaceContentItemDirector>();
+        services.AddTransient<ContentItemDirectorBase, GeneralContentItemDirector>();
+
         
         #endregion
 
