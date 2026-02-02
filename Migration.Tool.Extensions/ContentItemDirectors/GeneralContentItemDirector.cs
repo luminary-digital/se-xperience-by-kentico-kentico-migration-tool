@@ -14,8 +14,8 @@ namespace Migration.Tool.Extensions.ContentItemDirectors;
 /// <param name="workspaceService"></param>
 /// <param name="toolConfiguration"></param>
 public class GeneralContentItemDirector(
-    ContentFolderService contentFolderService, 
-    WorkspaceService workspaceService, 
+    ContentFolderService contentFolderService,
+    WorkspaceService workspaceService,
     ToolConfiguration toolConfiguration) : ContentItemDirectorBase
 {
     public override void Direct(MediaContentItemSource source, IBaseContentItemActionProvider options)
@@ -23,7 +23,7 @@ public class GeneralContentItemDirector(
         if (source.SourceSite.SiteDisplayName == SiteConstants.ClipsalSiteDisplayName)
         {
             options.OverrideWorkspace(WorkspaceConstants.ClipsalWorkspaceName, WorkspaceConstants.ClipsalWorkspaceDisplayName);
-        } 
+        }
         else
         {
             options.OverrideWorkspace(WorkspaceConstants.PdlWorkspaceName, WorkspaceConstants.PdlWorkspaceDisplayName);
@@ -37,11 +37,11 @@ public class GeneralContentItemDirector(
         {
             return;
         }
-        
+
         // TODO Switch to switch statement in the future
         if (source.SourceClassName == FaqConstants.FaqItemCustomTable)
         {
-            EnsureFaqItemPath( source, options);
+            EnsureFaqItemPath(options);
             return;
         }
 
@@ -58,7 +58,7 @@ public class GeneralContentItemDirector(
         {
             workspaceGuid = workspaceService.EnsureWorkspace(WorkspaceConstants.ClipsalWorkspaceName, WorkspaceConstants.ClipsalWorkspaceDisplayName).GetAwaiter().GetResult();
             options.OverrideWorkspace(WorkspaceConstants.ClipsalWorkspaceName, WorkspaceConstants.ClipsalWorkspaceDisplayName);
-        } 
+        }
         else
         {
             workspaceGuid = workspaceService.EnsureWorkspace(WorkspaceConstants.PdlWorkspaceName, WorkspaceConstants.PdlWorkspaceDisplayName).GetAwaiter().GetResult();
@@ -71,48 +71,27 @@ public class GeneralContentItemDirector(
             var nodePath = source.SourceNode.NodeAliasPath.TrimEnd('/');
             var lastSlashIndex = nodePath.LastIndexOf('/');
             var parentPath = lastSlashIndex >= 0 ? nodePath[..lastSlashIndex] : string.Empty;
-            
+
             // Build absolute path: /{SiteName}/{ParentPath}
             var absolutePath = $"/{parentPath.TrimStart('/')}".TrimEnd('/');
-            
+
             // Create folder structure
             var pathTemplate = ContentFolderService.StandardPathTemplate(source.SourceSite.SiteName, absolutePath, workspaceGuid.Value);
             contentFolderService.EnsureFolderStructure(pathTemplate, workspaceGuid.Value).GetAwaiter().GetResult();
-            
+
             options.OverrideContentFolder(absolutePath);
         }
     }
 
-    private void EnsureFaqItemPath(ContentItemSource source, IContentItemActionProvider options)
+    private void EnsureFaqItemPath(IContentItemActionProvider options)
     {
-        // Determine workspace based on site
-        Guid? workspaceGuid;
-        if (source.SourceSite.SiteDisplayName == SiteConstants.ClipsalSiteDisplayName)
-        {
-            workspaceGuid = workspaceService.EnsureWorkspace(WorkspaceConstants.ClipsalWorkspaceName, WorkspaceConstants.ClipsalWorkspaceDisplayName).GetAwaiter().GetResult();
-            options.OverrideWorkspace(WorkspaceConstants.ClipsalWorkspaceName, WorkspaceConstants.ClipsalWorkspaceDisplayName);
-        } 
-        else
-        {
-            workspaceGuid = workspaceService.EnsureWorkspace(WorkspaceConstants.PdlWorkspaceName, WorkspaceConstants.PdlWorkspaceDisplayName).GetAwaiter().GetResult();
-            options.OverrideWorkspace(WorkspaceConstants.PdlWorkspaceName, WorkspaceConstants.PdlWorkspaceDisplayName);
-        }
+        // Build absolute path: /{SiteName}/{ParentPath}
+        var absolutePath = $"/{FaqConstants.FaqContentFolderName}";
 
-        if (workspaceGuid.HasValue)
-        {
-            // Remove the last path segment to get the parent folder path
-            var nodePath = source.SourceNode.NodeAliasPath.TrimEnd('/');
-            var lastSlashIndex = nodePath.LastIndexOf('/');
-            var parentPath = lastSlashIndex >= 0 ? nodePath[..lastSlashIndex] : string.Empty;
-            
-            // Build absolute path: /{SiteName}/{ParentPath}
-            var absolutePath = $"/{parentPath.TrimStart('/')}".TrimEnd('/');
-            
-            // Create folder structure
-            var pathTemplate = ContentFolderService.StandardPathTemplate(source.SourceSite.SiteName, absolutePath, workspaceGuid.Value);
-            contentFolderService.EnsureFolderStructure(pathTemplate, workspaceGuid.Value).GetAwaiter().GetResult();
-            
-            options.OverrideContentFolder(absolutePath);
-        }
+        // Create folder structure
+        var pathTemplate = ContentFolderService.StandardPathTemplate("Shared", absolutePath, workspaceService.FallbackWorkspace.Value.WorkspaceGUID);
+        contentFolderService.EnsureFolderStructure(pathTemplate).GetAwaiter().GetResult();
+
+        options.OverrideContentFolder(absolutePath);
     }
 }
