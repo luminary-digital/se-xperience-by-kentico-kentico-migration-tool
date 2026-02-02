@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Migration.Tool.Extensions.Behaviors;
+using Migration.Tool.Extensions.ClassMappings;
 using Migration.Tool.Extensions.CommunityMigrations;
 using Migration.Tool.Extensions.ContentItemDirectors;
 using Migration.Tool.Extensions.CustomWidgetMigrations;
@@ -41,8 +42,11 @@ public static class ServiceCollectionExtensions
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ContentHubInitializerBehavior<,>));
         #endregion
         
+        // Comprehensive mapping for all 20 SE page types that inherit from SE.BasePage
+        services.AddAllSEPageTypesReusableSchemaMapping();
 
-
+        // Old sample mapping - replaced by comprehensive mapping above
+        // services.AddSEOMetaDataReusableSchemaMapping();
 
         // services.AddClassMergeExample();
         // services.AddClassMergeExampleAsReusable();
