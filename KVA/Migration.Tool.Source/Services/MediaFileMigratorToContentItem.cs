@@ -54,8 +54,16 @@ public class MediaFileMigratorToContentItem(
 
             var directive = GetDirective(new(ksSite, ksMediaLibrary, ksMediaFile));
 
+            var contentLanguageName = directive.WorkspaceOptions.Name switch
+            {
+                "clipsal_workspace" => "en-AU",
+                "pdl_workspace" => "en-NZ",
+                _ => defaultContentLanguage.ContentLanguageName
+            };
+
             var workspaceGuid = workspaceService.EnsureWorkspace(directive.WorkspaceOptions);
-            var umtContentItem = await assetFacade.FromMediaFile(ksMediaFile, ksMediaLibrary, ksSite, [defaultContentLanguage.ContentLanguageName], workspaceGuid, directive.ContentFolderOptions);
+            
+            var umtContentItem = await assetFacade.FromMediaFile(ksMediaFile, ksMediaLibrary, ksSite, [contentLanguageName], workspaceGuid, directive.ContentFolderOptions);
 
             umtContentItem.ContentItemWorkspaceGUID = workspaceGuid;
 
